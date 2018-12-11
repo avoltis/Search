@@ -1,11 +1,11 @@
 import React from 'react';
 
 class SearchBar extends React.Component {
-    state = { 
+    state = {
         term: '',
         photoSearch: false,
-        videoSearch: false 
-     };
+        videoSearch: false
+    };
 
     onFormSubmit = event => {
         event.preventDefault(); //does not let the form to submit state change only on enter or button press
@@ -13,13 +13,18 @@ class SearchBar extends React.Component {
     }
 
     onSearchPhoto = () => {
-        this.setState({ photoSearch: true });
-        this.props.onSubmit(this.state);
+        this.setState({ photoSearch: true, videoSearch: false });
     }
 
     onSearchVideo = () => {
-        this.setState({ videoSearch: true });
-        this.props.onSubmit(this.state);
+        this.setState({ photoSearch: false, videoSearch: true });
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.photoSearch !== this.state.photoSearch || prevState.videoSearch !== this.state.videoSearch)
+        {
+            this.props.onSubmit(this.state);
+        }
     }
 
     render() {
