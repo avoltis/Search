@@ -6,14 +6,37 @@ import ImageList from './imageList';
 class App extends React.Component {
     state = { images: [] };
 
-    onSearchSubmit = async (term) => {
+    onSearchSubmit = (searchData) => {
+        if (searchData.term !== '') {
+            if (searchData.photoSearch) {
+                this.getPhotos(searchData.term);
+            }
+            else if (searchData.videoSearch) {
+                this.getVideos(searchData.term);
+            }
+            else {
+                this.getPhotos(searchData.term);
+            }
+        }
+    }
 
+    getPhotos = async (term) => {
         const response = await unsplash.get('/search/photos', {
-            params: { 
+            params: {
                 query: term,
-                per_page : 20
-             }
+                per_page: 20
+            }
+        });
 
+        this.setState({ images: response.data.results });
+    }
+
+    getVideos = async (term) => {
+        const response = await unsplash.get('/search/photos', {
+            params: {
+                query: term,
+                per_page: 20
+            }
         });
 
         this.setState({ images: response.data.results });

@@ -1,4 +1,5 @@
 ## Demo 
+React Web App to search for photos and videos 
 https://findphotos.herokuapp.com/
 
 Try to search for flowers, cars, bus ect
