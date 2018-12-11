@@ -1,10 +1,7 @@
 ## Demo 
 https://findphotos.herokuapp.com/
-try to search for flowers, cars, bus ect
 
-In the project directory, you can run:
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Try to search for flowers, cars, bus ect
 
 ## Available Scripts
 
