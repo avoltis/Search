@@ -12,12 +12,12 @@ class SearchBar extends React.Component {
         this.props.onSubmit(this.state);
     }
 
-    onSearchPhoto = event => {
+    onSearchPhoto = () => {
         this.setState({ photoSearch: true });
         this.props.onSubmit(this.state);
     }
 
-    onSearchVideo = event => {
+    onSearchVideo = () => {
         this.setState({ videoSearch: true });
         this.props.onSubmit(this.state);
     }

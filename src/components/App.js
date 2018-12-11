@@ -1,10 +1,14 @@
 import React from 'react';
 import unsplash from '../api/unsplash';
+import youtube from '../api/youtube';
 import SearchBar from './SearchBar/SearchBar';
 import ImageList from './ImageList/imageList';
 
 class App extends React.Component {
-    state = { images: [] };
+    state = {
+        images: [],
+        videos: []
+    };
 
     onSearchSubmit = (searchData) => {
         if (searchData.term !== '') {
@@ -32,14 +36,13 @@ class App extends React.Component {
     }
 
     getVideos = async (term) => {
-        const response = await unsplash.get('/search/photos', {
+        const response = await youtube.get('/search', {
             params: {
-                query: term,
-                per_page: 20
-            }
+                q: term            }
         });
 
-        this.setState({ images: response.data.results });
+        console.log(response);
+        //this.setState({ images: response.data.results });
     }
 
     render() {
