@@ -14,6 +14,10 @@ class App extends React.Component {
         selectedVideo: null
     };
 
+    componentDidMount() {
+        this.onSearchSubmit({term: "random"}); //first time only
+    }
+
     onSearchSubmit = (searchData) => {
         if (searchData.term !== '') {
             if (searchData.photoSearch) {
@@ -36,7 +40,11 @@ class App extends React.Component {
             }
         });
 
-        this.setState({ term, images: response.data.results, videos: [] });
+        this.setState({
+            term,
+            images: response.data.results,
+            videos: []
+        });
     }
 
     getVideos = async (term) => {
@@ -46,7 +54,12 @@ class App extends React.Component {
             }
         });
 
-        this.setState({ term, images: [], videos: response.data.items });
+        this.setState({
+            term,
+            images: [],
+            videos: response.data.items,
+            selectedVideo: response.data.items[0]
+        });
     }
 
     onVideoSelect = (video) => {
@@ -60,9 +73,15 @@ class App extends React.Component {
         }
         else if (this.state.videos.length > 0) {
             layout =
-                <div>
-                    <VideoDetail video={this.state.selectedVideo} />
-                    <VideoList onVideoSelect={this.onVideoSelect} videos={this.state.videos} />
+                <div className="ui grid">
+                    <div className="ui row">
+                        <div className="eleven wide column">
+                            <VideoDetail video={this.state.selectedVideo} />
+                        </div>
+                        <div className="five wide column">
+                            <VideoList onVideoSelect={this.onVideoSelect} videos={this.state.videos} />
+                        </div>
+                    </div>
                 </div>
         }
         else if (this.state.term || '') {

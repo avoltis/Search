@@ -4,7 +4,8 @@ class SearchBar extends React.Component {
     state = {
         term: '',
         photoSearch: false,
-        videoSearch: false
+        videoSearch: false,
+        newSearch: false
     };
 
     onFormSubmit = event => {
@@ -13,16 +14,16 @@ class SearchBar extends React.Component {
     }
 
     onSearchPhoto = () => {
-        this.setState({ photoSearch: true, videoSearch: false });
+        this.setState({ photoSearch: true, videoSearch: false, newSearch: true });
     }
 
     onSearchVideo = () => {
-        this.setState({ photoSearch: false, videoSearch: true });
+        this.setState({ photoSearch: false, videoSearch: true , newSearch: true});
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevState.photoSearch !== this.state.photoSearch || prevState.videoSearch !== this.state.videoSearch)
-        {
+        if (prevState.photoSearch !== this.state.photoSearch || prevState.videoSearch !== this.state.videoSearch || this.state.newSearch) {
+            this.setState({ newSearch: false});
             this.props.onSubmit(this.state);
         }
     }
