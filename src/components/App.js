@@ -56,7 +56,6 @@ class App extends React.Component {
         else if (this.state.term || '')
             layout = "Found 0 Result, Try with a different search!"
 
-            console.log(this.state)
         return (
             <div className="ui container" style={{ marginTop: '10px' }}>
                 <SearchBar onSubmit={this.onSearchSubmit} />
