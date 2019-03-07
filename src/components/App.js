@@ -7,34 +7,53 @@ import VideoList from './VideoList/VideoList';
 import VideoDetail from './VideoDetail/VideoDetail';
 
 class App extends React.Component {
-  state = {
-    term: '',
-    images: [],
-    videos: [],
-    selectedVideo: null
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      term: '',
+      images: [],
+      videos: [],
+      selectedVideo: null,
+      imageCount: 10
+    };
+
+    this.iScroll = React.createRef();
+  }
 
   componentDidMount() {
-    this.onSearchSubmit({ term: 'random' }); //first time only
+    this.onSearchSubmit({ term: 'random' });
+    window.addEventListener('scroll', this.handleScroll);
   }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+
+  handleScroll = event => {
+    let scroll = event.target.scrollingElement;
+    if (scroll.scrollTop + scroll.clientHeight >= scroll.scrollHeight - 20) {
+      this.setState({ imageCount: this.state.imageCount + 5 }); // add 10 pictures
+    }
+    this.onSearchSubmit({ term: this.state.term });
+  };
 
   onSearchSubmit = searchData => {
     if (searchData.term !== '') {
       if (searchData.photoSearch) {
-        this.getPhotos(searchData.term);
+        this.getPhotos(searchData.term, this.state.imageCount);
       } else if (searchData.videoSearch) {
         this.getVideos(searchData.term);
       } else {
-        this.getPhotos(searchData.term);
+        this.getPhotos(searchData.term, this.state.imageCount);
       }
     }
   };
 
-  getPhotos = async term => {
+  getPhotos = async (term, count = 10) => {
     const response = await unsplash.get('/search/photos', {
       params: {
         query: term,
-        per_page: 20
+        per_page: count
       }
     });
 
