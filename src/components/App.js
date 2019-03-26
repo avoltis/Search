@@ -22,7 +22,6 @@ class App extends React.Component {
 
   componentDidMount() {
     this.onSearchSubmit({ term: 'random' });
-    window.addEventListener('scroll', this.handleScroll);
   }
 
   componentWillUnmount() {
@@ -40,10 +39,13 @@ class App extends React.Component {
   onSearchSubmit = searchData => {
     if (searchData.term !== '') {
       if (searchData.photoSearch) {
+        window.addEventListener('scroll', this.handleScroll);
         this.getPhotos(searchData.term, this.state.imageCount);
       } else if (searchData.videoSearch) {
+        window.removeEventListener('scroll', this.handleScroll);
         this.getVideos(searchData.term);
       } else {
+        window.addEventListener('scroll', this.handleScroll);
         this.getPhotos(searchData.term, this.state.imageCount);
       }
     }
